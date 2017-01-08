@@ -10,8 +10,12 @@ function dash(buttonName) {
   return config.get(`dashButtons.${buttonName}`);
 }
 
+function onDash(button, callback) {
+  return dashButton(button).on('detected', () => {
+    callback();
+  });
+}
+
 const bidRobot = dash('bidRobot');
 
-dashButton(bidRobot).on('detected', () => {
-  complice.add('+4) Bid a robot to [__]');
-});
+onDash(bidRobot, () =>  complice.add('+4) Bid a robot to [__]'));
