@@ -1,7 +1,7 @@
 # My Home Automation
 
 This is Felippe Nardi's home automation script. Currently it interacts with
-Complice.co to add intentions with the press of a button.
+[Complice.co](http://complice.co) to add intentions with the press of an [Amazon Dash Button](https://www.amazon.com/Dash-Buttons/b?node=10667898011).
 
 You are welcome to fork and modify it to make your own home automation system.
 
