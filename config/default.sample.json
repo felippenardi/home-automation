@@ -1,6 +1,9 @@
 {
   "dashButtons": {
-    "bidRobot": "<AMAZON_DASH_BUTTON_MAC_ADDRESS>"
+    "bidRobot": "<AMAZON_DASH_BUTTON_MAC_ADDRESS>",
+    "takeTrashOut": "<AMAZON_DASH_BUTTON_MAC_ADDRESS>",
+    "dishwasher": "<AMAZON_DASH_BUTTON_MAC_ADDRESS>",
+    "laundry": "<AMAZON_DASH_BUTTON_MAC_ADDRESS>"
   },
   "complice": {
     "authToken": "<YOUR_COMPLICE_AUTH_TOKEN>"

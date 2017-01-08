@@ -17,5 +17,13 @@ function onDash(button, callback) {
 }
 
 const bidRobot = dash('bidRobot');
-
 onDash(bidRobot, () =>  complice.add('+4) Bid a robot to [__]'));
+
+const takeTrashOut = dash('takeTrashOut');
+onDash(takeTrashOut, () =>  complice.add('+5) Take out the trash'));
+
+const dishwasher = dash('dishwasher');
+onDash(dishwasher, () =>  complice.add('+5) Empty the dishwasher'));
+
+const laundry = dash('laundry');
+onDash(laundry, () =>  complice.add('+5) Laundry: [__]'));
