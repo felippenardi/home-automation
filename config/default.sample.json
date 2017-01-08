@@ -1,0 +1,8 @@
+{
+  "dashButtons": {
+    "bidRobot": "<AMAZON_DASH_BUTTON_MAC_ADDRESS>"
+  },
+  "complice": {
+    "authToken": "<YOUR_COMPLICE_AUTH_TOKEN>"
+  }
+}
