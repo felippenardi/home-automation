@@ -7,5 +7,9 @@
   },
   "complice": {
     "authToken": "<YOUR_COMPLICE_AUTH_TOKEN>"
+  },
+  "pushover": {
+    "user": "<PUSHOVER_USER>",
+    "token": "<PUSHOVER_TOKEN>"
   }
 }

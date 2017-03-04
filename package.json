@@ -9,6 +9,8 @@
     "babel-preset-stage-2": "^6.18.0",
     "config": "^1.24.0",
     "node-dash-button": "^0.6.1",
+    "node-lifx": "^0.8.0",
+    "pushover-notifications": "^0.2.4",
     "request": "^2.79.0"
   },
   "devDependencies": {},
