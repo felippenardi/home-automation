@@ -1,31 +1,49 @@
 import LifxClient from 'node-lifx';
+import config from 'config';
+import _ from 'lodash';
 
 var livingRoomLights = false;
 var bedRoomLights = 0;
-var lifx = new LifxClient.Client();
+var client = new LifxClient.Client();
 
-lifx.on('light-new', function(light) {
-  console.log(lifx.lights().length);
+const lights = config.get('lifxLights');
+
+const allLights = _.flatMap(lights, function(groupLights) {
+  return _.map(groupLights, function (label, id) {
+    return { label: label,  id: id };
+  });
+});
+const allLightsByLabel = _.keyBy(allLights, 'label');
+const allLightsById = _.keyBy(allLights, 'id');
+
+client.on('light-new', function(light) {
+  console.log('New light found.');
+  console.log('Total:', client.lights().length);
+  console.log('ID: ' + light.id);
+  console.log('Label: ' + allLightsById[light.id].label);
+  console.log('----------------------');
 });
 
 function switchLivingRoom() {
   if (livingRoomLights) {
     livingRoomLights = !livingRoomLights;
-    lifx.light('Sofá').on(2000);
-    lifx.light('Mesa').on(2000);
-    lifx.light('Corredor').on(2000);
-    lifx.light('Teto Cozinha').on(2000);
+
+    _.map(lights['sala'], function(label, id) {
+      console.log(`Turning on ${label}`);
+      client.light(id).on(2000);
+    });
   } else {
     livingRoomLights = !livingRoomLights;
-    lifx.light('Sofá').off(2000);
-    lifx.light('Mesa').off(2000);
-    lifx.light('Corredor').off(2000);
-    lifx.light('Teto Cozinha').off(2000);
+
+    _.map(lights['sala'], function(label, id) {
+      console.log(`Turning off ${label}`);
+      client.light(id).off(2000);
+    });
   }
 }
 
 function switchBedroom() {
-  lifx.light('Teto Quarto').getState(function(error, status) {
+  client.light(allLightsByLabel['quarto'].id).getState(function(error, status) {
     const brightness = status.color.brightness;
     const altBrightness = Math.min(100, brightness + 30);
     const kelvin = status.color.brightness;
@@ -33,28 +51,23 @@ function switchBedroom() {
     console.log(altBrightness);
     if (status.power === 0 || bedRoomLights === 0) {
       bedRoomLights = 1;
-      lifx.light('Teto Quarto').on();
-      lifx.light('Teto Quarto').color(0,0,altBrightness,altKelvin,500);
-      lifx.light('Teto Quarto').color(0,0,brightness,kelvin,1000);
-      lifx.light('Teto Quarto').color(0,0,70,4000,1000);
+      console.log(brightness);
+      client.light(allLightsByLabel['quarto'].id).on();
+      client.light(allLightsByLabel['quarto'].id).color(0,0,70,4000,1000);
 
     } else if (bedRoomLights === 1) {
       bedRoomLights = 2;
-      lifx.light('Teto Quarto').color(0,0,altBrightness,altKelvin,500);
-      lifx.light('Teto Quarto').color(0,0,brightness,kelvin,1000);
-      lifx.light('Teto Quarto').color(0,0,25,3200,30000);
+      client.light(allLightsByLabel['quarto'].id).color(0,0,25,3200,3000);
 
     } else {
       bedRoomLights = 0;
-      lifx.light('Teto Quarto').color(0,0,altBrightness,altKelvin,500);
-      lifx.light('Teto Quarto').color(0,0,brightness,kelvin,1000);
-      lifx.light('Teto Quarto').off(30000);
+      client.light(allLightsByLabel['quarto'].id).off(3000);
     }
 
   }) 
 }
 
-lifx.init();
+client.init();
 
 const lifxLights = {
   switchLivingRoom,
